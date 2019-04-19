@@ -1,0 +1,43 @@
+@model AnActivity
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="CreateActivity" method="post">
+            <a class="btn btn-primary" href="/Dashboard">Dashboard</a>
+            <a class="btn btn-danger" href="/logout">Log Out</a>
+            <h1>Create An Activity</h1>
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="Title"></span>
+                <label for="">Title</label>
+                <input type="text" asp-for="Title" class="form-control">
+            </div>
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="Time"></span>
+                <label for="">Time</label>
+                <input type="time" asp-for="Time" class="form-control">
+            </div>
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="Date"></span>
+                <label for="">Date</label>
+                <input type="date" asp-for="Date" class="form-control">
+            </div>
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="Duration"></span>
+                <label for="">Duration</label>
+                <input asp-for="Duration" class="form-control">
+                <span class="text-danger" asp-validation-for="TimeChooser"></span>
+                <select asp-for="TimeChooser">
+                    <option value="Hours">Hours</option>
+                    <option value="Minutes">Minutes</option>
+                    <option value="Days">Days</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <span class="text-danger" asp-validation-for="Description"></span>
+                <label for="">Description</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+            <button class="btn btn-success">Create Activity</button>
+        </form>
+    </div>
+</div>

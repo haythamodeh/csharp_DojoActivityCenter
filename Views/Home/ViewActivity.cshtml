@@ -1,0 +1,31 @@
+@model AnActivity
+
+<div class="row">
+    <div class="col-md-6">
+        <a class="btn btn-primary" href="/Dashboard">Dashboard</a>
+        <a class="btn btn-danger" href="/logout">Log Out</a>
+        @if(Model.UserID == ViewBag.User.UserID)
+        {
+            <a class="btn btn-danger" href="/delete/activity/@Model.ActivityID">Delete</a>
+        }else if(Model.UserID != ViewBag.User.UserID && !@Model.AllParticipants.Any(u => u.UserID == ViewBag.User.UserID))
+        {
+            <a class="btn btn-success" href="/join/activity/@Model.ActivityID">Join</a>
+        }else {
+            <a class="btn btn-warning" href="/leave/activity/@Model.ActivityID">Leave</a>
+        }
+        <h1>Activity: @Model.Title</h1>
+        <hr>
+        <h4>Event Coordinator: @ViewBag.whomadeit.FirstName</h4>
+        <hr>
+        <h4>Description:</h4>
+        <p>@Model.Description</p>
+        <hr>
+        <h5>Participants:</h5>
+        @{
+            foreach(var g in @Model.AllParticipants)
+            {
+                <li>@g.User.FirstName @g.User.LastName</li>
+            }
+        }
+    </div>
+</div>

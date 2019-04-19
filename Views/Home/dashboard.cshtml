@@ -1,0 +1,46 @@
+@model List<AnActivity>
+
+<div class="center jumbotron">
+    <h2 class="text-success" style="display: inline-block" id="header">Dojo Activity Center  -- Welcome @ViewBag.User.FirstName</h2>
+    <a class="btn btn-danger logout" style="float:right;" href="/logout">Logout</a>
+</div>
+@if(TempData["passedDue"] != null)
+{
+  <h3 class="text-center text-danger">@TempData["passedDue"]</h3>
+}
+<table class="table table-striped text-center ">
+  <thead>
+    <tr>
+      <th scope="col">Actvity</th>
+      <th scope="col">Date And Time</th>
+      <th scope="col">Duration</th>
+      <th scope="col">Event Coordinator</th>
+      <th scope="col">No. of Participants</th>
+      <th scope="col">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+      @{
+        foreach(var a in @Model)
+        {
+          <tr>
+          <td><a href="view/activity/@a.ActivityID">@a.Title</a></td>
+          <td>@a.Date.ToString("MM/dd") At @a.Time.ToString("h:mm tt")</td>
+          <td>@a.Duration @a.TimeChooser</td>
+          <td>@a.CreatorNameFirst</td>
+          <td>@a.AllParticipants.Count</td>
+          @if(a.UserID == ViewBag.User.UserID)
+          {
+            <td><a class="btn btn-danger" href="/delete/activity/@a.ActivityID">Delete</a></td>
+          }else if(a.UserID != ViewBag.User.UserID && !a.AllParticipants.Any(u => u.UserID == ViewBag.User.UserID))
+          {
+            <td><a class="btn btn-success" href="/join/activity/@a.ActivityID">Join</a></td>
+          }else {
+            <td><a class="btn btn-warning" href="/leave/activity/@a.ActivityID">Leave</a></td>
+          }
+          </tr>
+        }
+      }
+  </tbody>
+</table>
+<a class="btn btn-primary" style="float:right;" href="/activity/new">New Activity</a>
